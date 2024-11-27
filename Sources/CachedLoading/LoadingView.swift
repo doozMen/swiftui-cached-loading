@@ -5,6 +5,7 @@ public struct LoadingView<V: Hashable & Sendable, Content: View>: View {
   
   var content: (V) -> Content
   var loader: () async throws -> V
+  
   @State var currentTask: Task<Void, Never>?
   
   public init(
@@ -99,6 +100,10 @@ public enum LoadingState<V: Hashable & Sendable>: Equatable, Sendable {
 
 public struct LoadingError: Swift.Error, Hashable, Sendable {
   public let error: Swift.Error
+  
+  public init(error: Error) {
+    self.error = error
+  }
   
   public func hash(into hasher: inout Hasher) {
     hasher.combine(error.localizedDescription)

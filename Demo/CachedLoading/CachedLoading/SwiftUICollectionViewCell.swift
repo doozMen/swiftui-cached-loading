@@ -17,15 +17,19 @@ public class SportUICollectionViewCell: UICollectionViewCell {
   }
   
   private var hostingController: UIHostingController<SportView>?
+  private var sportData: SportData?
   
   public func configure() {
-
+    var view = SportView(sporData: sportData)
+    view.dataLoaded = { [weak self] sportData in
+      self?.sportData = sportData
+    }
     // If the hostingController already exists, update it
     if let hostingController = hostingController {
-      hostingController.rootView = SportView()
+      hostingController.rootView = view
     } else {
       // Create a new hostingController and embed it
-      let swiftUIView = SportView()
+      let swiftUIView = view
       let hostingController = UIHostingController(rootView: swiftUIView)
       self.hostingController = hostingController
       

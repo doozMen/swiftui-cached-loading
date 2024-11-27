@@ -10,6 +10,7 @@ private let sportIdentifier = "sport cell"
 public final class CollectionViewController: UICollectionViewController {
   
   let items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+  private var sportData: SportData?
   
   public init()
   {
@@ -70,8 +71,12 @@ public final class CollectionViewController: UICollectionViewController {
     if #available(iOS 16.0, *) {
       if indexPath.row == 9 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genericIdentifier, for: indexPath)
+        var sportView = SportView(sporData: sportData)
+        sportView.dataLoaded = { [weak self] in
+          self?.sportData = $0
+        }
         cell.contentConfiguration = UIHostingConfiguration {
-          SportView()
+          sportView
         }
         return cell
       } else {
