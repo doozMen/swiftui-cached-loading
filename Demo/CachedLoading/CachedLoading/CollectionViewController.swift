@@ -11,8 +11,6 @@ private let sport2Identifier = "sport 2 cell"
 public final class CollectionViewController: UICollectionViewController {
   
   let items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-  var sportView = SportView(loader: .init(endpoint: "First EndPoint"))
-  var sportView2 = SportView(loader: .init(endpoint: "Second EndPoint"))
 
   public init()
   {
@@ -78,14 +76,14 @@ public final class CollectionViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportIdentifier, for: indexPath)
         
         cell.contentConfiguration = UIHostingConfiguration {
-          sportView
+          SportView(loader: .init(endpoint: "First EndPoint iOS 16"))
         }
         return cell
       }else if indexPath.row == 9 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sport2Identifier, for: indexPath)
         
         cell.contentConfiguration = UIHostingConfiguration {
-          sportView2
+          SportView(loader: .init(endpoint: "Second EndPoint IOS 16"))
         }
         return cell
       }  else {
@@ -100,11 +98,11 @@ public final class CollectionViewController: UICollectionViewController {
     } else {
       if indexPath.row == 2 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportIdentifier, for: indexPath) as! SportUICollectionViewCell
-        cell.configure(view: sportView)
+        cell.configure(view: SportView(loader: .init(endpoint: "First EndPoint iOS 15")))
         return cell
       }else if indexPath.row == 9 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sport2Identifier, for: indexPath) as! SportUICollectionViewCell
-        cell.configure(view: sportView2)
+        cell.configure(view: SportView(loader: .init(endpoint: "Second EndPoint iOS 15")))
         return cell
       } else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: numberIdentifier, for: indexPath) as! NumberUICollectionViewCell

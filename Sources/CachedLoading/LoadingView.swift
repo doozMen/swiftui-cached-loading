@@ -37,9 +37,6 @@ public struct LoadingView<V: Hashable & Sendable, Content: View>: View {
         print("Starting from cache")
       }
     }
-    .onDisappear() {
-      cancelCurrentTask()
-    }
     .onChange(of: loadingState) { newValue in
       print("loadingState changed to: \(newValue)")
       if newValue == .cancelled {
