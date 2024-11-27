@@ -17,13 +17,9 @@ public class SportUICollectionViewCell: UICollectionViewCell {
   }
   
   private var hostingController: UIHostingController<SportView>?
-  private var sportData: SportData?
   
-  public func configure() {
-    var view = SportView(sporData: sportData)
-    view.dataLoaded = { [weak self] sportData in
-      self?.sportData = sportData
-    }
+  public func configure(view: SportView) {
+    
     // If the hostingController already exists, update it
     if let hostingController = hostingController {
       hostingController.rootView = view

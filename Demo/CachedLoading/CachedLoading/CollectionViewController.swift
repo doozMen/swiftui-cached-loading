@@ -6,12 +6,14 @@ import UIKit
 private let numberIdentifier = "number cell"
 private let genericIdentifier = "number cell"
 private let sportIdentifier = "sport cell"
+private let sport2Identifier = "sport 2 cell"
 
 public final class CollectionViewController: UICollectionViewController {
   
   let items = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-  private var sportData: SportData?
-  
+  var sportView = SportView(loader: .init(endpoint: "First EndPoint"))
+  var sportView2 = SportView(loader: .init(endpoint: "Second EndPoint"))
+
   public init()
   {
     let layout = UICollectionViewFlowLayout()
@@ -34,8 +36,11 @@ public final class CollectionViewController: UICollectionViewController {
     // Register cell classes
     if #available(iOS 16.0, *) {
       self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: genericIdentifier)
+      self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: sportIdentifier)
+      self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: sport2Identifier)
     } else {
       self.collectionView?.register(SportUICollectionViewCell.self, forCellWithReuseIdentifier: sportIdentifier)
+      self.collectionView?.register(SportUICollectionViewCell.self, forCellWithReuseIdentifier: sport2Identifier)
       self.collectionView?.register(NumberUICollectionViewCell.self, forCellWithReuseIdentifier: numberIdentifier)
     }
     
@@ -69,17 +74,21 @@ public final class CollectionViewController: UICollectionViewController {
     
     // Configure the cell
     if #available(iOS 16.0, *) {
-      if indexPath.row == 9 {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genericIdentifier, for: indexPath)
-        var sportView = SportView(sporData: sportData)
-        sportView.dataLoaded = { [weak self] in
-          self?.sportData = $0
-        }
+      if indexPath.row == 2 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportIdentifier, for: indexPath)
+        
         cell.contentConfiguration = UIHostingConfiguration {
           sportView
         }
         return cell
-      } else {
+      }else if indexPath.row == 9 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sport2Identifier, for: indexPath)
+        
+        cell.contentConfiguration = UIHostingConfiguration {
+          sportView2
+        }
+        return cell
+      }  else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genericIdentifier, for: indexPath)
         cell.contentConfiguration = UIHostingConfiguration {
           Text("\(indexPath.row)")
@@ -89,9 +98,13 @@ public final class CollectionViewController: UICollectionViewController {
       }
       
     } else {
-      if indexPath.row == 9 {
+      if indexPath.row == 2 {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportIdentifier, for: indexPath) as! SportUICollectionViewCell
-        cell.configure()
+        cell.configure(view: sportView)
+        return cell
+      }else if indexPath.row == 9 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sport2Identifier, for: indexPath) as! SportUICollectionViewCell
+        cell.configure(view: sportView2)
         return cell
       } else {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: numberIdentifier, for: indexPath) as! NumberUICollectionViewCell
