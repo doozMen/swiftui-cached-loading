@@ -19,9 +19,21 @@ struct CollectionViewWrapper: UIViewControllerRepresentable {
 }
 
 struct ContentView: View {
-    var body: some View {
-      CollectionViewWrapper()
+  @State var loadingState: LoadingState<Int> = .loading
+  var body: some View {
+    VStack {
+      Button {
+        loadingState = .cancelled
+      } label: {
+        Text("Cancel")
+      }
+      .padding()
+      
+      LoadingView(loadingState: $loadingState, loader: loader) { value in
+        Text("\(value)")
+      }
     }
+  }
 }
 
 #Preview {
