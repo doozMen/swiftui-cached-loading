@@ -30,7 +30,11 @@ public struct LoadingView<V: Hashable & Sendable, Content: View>: View {
         Text("Error: \(loadingError.error.localizedDescription)")
       }
     }.task {
-      await startLoading()
+      if !loadingState.isLoaded {
+        await startLoading()
+      } else {
+        print("Starting from cache")
+      }
     }
     .onDisappear() {
       cancelCurrentTask()
@@ -84,6 +88,13 @@ public enum LoadingState<V: Hashable & Sendable>: Equatable, Sendable {
   case loading, cancelled
   case loaded(V)
   case error(LoadingError)
+  
+  var isLoaded: Bool {
+    switch self {
+    case .loaded: return true
+    default: return false
+    }
+  }
 }
 
 public struct LoadingError: Swift.Error, Hashable, Sendable {

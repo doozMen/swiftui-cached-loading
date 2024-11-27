@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C03812F22CF7477E00F91A76 /* CachedLoading in Frameworks */ = {isa = PBXBuildFile; productRef = C03812F12CF7477E00F91A76 /* CachedLoading */; };
+		C08E0D192CF771230029987B /* Files in Frameworks */ = {isa = PBXBuildFile; productRef = C08E0D182CF771230029987B /* Files */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08E0D192CF771230029987B /* Files in Frameworks */,
 				C03812F22CF7477E00F91A76 /* CachedLoading in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +120,7 @@
 			name = CachedLoadingDemo;
 			packageProductDependencies = (
 				C03812F12CF7477E00F91A76 /* CachedLoading */,
+				C08E0D182CF771230029987B /* Files */,
 			);
 			productName = CachedLoading;
 			productReference = C03812C22CF7476700F91A76 /* CachedLoadingDemo.app */;
@@ -203,6 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C03812F02CF7477E00F91A76 /* XCLocalSwiftPackageReference "../../../swiftui-cached-loading" */,
+				C08E0D172CF771230029987B /* XCRemoteSwiftPackageReference "Files" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C03812C32CF7476700F91A76 /* Products */;
@@ -608,10 +612,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		C08E0D172CF771230029987B /* XCRemoteSwiftPackageReference "Files" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/doozmen/Files";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		C03812F12CF7477E00F91A76 /* CachedLoading */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CachedLoading;
+		};
+		C08E0D182CF771230029987B /* Files */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C08E0D172CF771230029987B /* XCRemoteSwiftPackageReference "Files" */;
+			productName = Files;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

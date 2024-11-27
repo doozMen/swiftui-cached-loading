@@ -3,7 +3,9 @@ import SwiftUI
 #if canImport(UIKit)
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let numberIdentifier = "number cell"
+private let genericIdentifier = "number cell"
+private let sportIdentifier = "sport cell"
 
 public final class CollectionViewController: UICollectionViewController {
   
@@ -30,10 +32,10 @@ public final class CollectionViewController: UICollectionViewController {
     
     // Register cell classes
     if #available(iOS 16.0, *) {
-      self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+      self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: genericIdentifier)
     } else {
-      self.collectionView?.register(SwiftUICollectionViewCell<ExampleContent<String>, String>.self, forCellWithReuseIdentifier: reuseIdentifier)
+      self.collectionView?.register(SportUICollectionViewCell.self, forCellWithReuseIdentifier: sportIdentifier)
+      self.collectionView?.register(NumberUICollectionViewCell.self, forCellWithReuseIdentifier: numberIdentifier)
     }
     
     // Do any additional setup after loading the view.
@@ -66,19 +68,32 @@ public final class CollectionViewController: UICollectionViewController {
     
     // Configure the cell
     if #available(iOS 16.0, *) {
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-      cell.contentConfiguration = UIHostingConfiguration {
-        Text("\(indexPath.row)")
-          .frame(width: UIScreen.main.bounds.width)
+      if indexPath.row == 9 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genericIdentifier, for: indexPath)
+        cell.contentConfiguration = UIHostingConfiguration {
+          SportView()
+        }
+        return cell
+      } else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: genericIdentifier, for: indexPath)
+        cell.contentConfiguration = UIHostingConfiguration {
+          Text("\(indexPath.row)")
+            .frame(width: UIScreen.main.bounds.width)
+        }
+        return cell
       }
-      return cell
+      
     } else {
-      let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SwiftUICollectionViewCell<ExampleContent<String>, String>
-      cell.content = { data in
-        ExampleContent(data: data)
+      if indexPath.row == 9 {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sportIdentifier, for: indexPath) as! SportUICollectionViewCell
+        cell.configure()
+        return cell
+      } else {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: numberIdentifier, for: indexPath) as! NumberUICollectionViewCell
+        cell.configure(text: "\(indexPath.row)")
+        return cell
       }
-      cell.configure(with: "\(indexPath.row)")
-      return cell
+      
     }
     
   }
@@ -114,15 +129,6 @@ public final class CollectionViewController: UICollectionViewController {
    }
    */
   
-}
-
-private struct ExampleContent<Data: Hashable & Sendable>: View {
-  @State var data: Data
-  
-  var body: some View {
-    Text("\(data)")
-      .frame(width: UIScreen.main.bounds.width)
-  }
 }
 
 @available(iOS 17.0, macOS 14.0, tvOS 17.0, visionOS 1.0, watchOS 10.0, *)
